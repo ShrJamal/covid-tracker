@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, makeStyles } from "@material-ui/core";
 import { CountryCovid } from "../@types/covid";
 import InfoBox from "./InfoBox";
+import { CasesType } from "../helpers/map_circles";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,15 @@ const useStyles = makeStyles({
   },
 });
 
-const Cards = (data: CountryCovid) => {
+export default function Cards({
+  data,
+  casesType,
+  onTypeChange,
+}: {
+  data: CountryCovid;
+  casesType: CasesType;
+  onTypeChange: (value: CasesType) => void;
+}) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -30,6 +39,8 @@ const Cards = (data: CountryCovid) => {
           title="New Cases"
           todayCases={data.todayCases}
           total={data.cases}
+          isActive={casesType === CasesType.cases}
+          onClick={() => onTypeChange(CasesType.cases)}
         />{" "}
         {/* Recovered */}
         <InfoBox
@@ -37,6 +48,8 @@ const Cards = (data: CountryCovid) => {
           title="Recovered"
           todayCases={data.todayRecovered}
           total={data.recovered}
+          isActive={casesType === CasesType.recovered}
+          onClick={() => onTypeChange(CasesType.recovered)}
         />{" "}
         {/* Deaths */}
         <InfoBox
@@ -44,10 +57,10 @@ const Cards = (data: CountryCovid) => {
           title="Deaths"
           todayCases={data.todayDeaths}
           total={data.deaths}
+          isActive={casesType === CasesType.deaths}
+          onClick={() => onTypeChange(CasesType.deaths)}
         />
       </Grid>
     </div>
   );
-};
-
-export default Cards;
+}

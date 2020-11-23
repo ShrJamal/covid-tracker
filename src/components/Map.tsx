@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Circle, MapContainer, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../App.css";
@@ -36,13 +36,14 @@ export default function CasesMap({
   mapCountries,
   center,
   zoom,
+  casesType,
 }: {
   mapCountries: Country[];
   center: [number, number];
   zoom: number;
+  casesType: CasesType;
 }) {
   const classes = useStyles();
-  const [casesType, setCasesType] = useState(CasesType.cases);
   return (
     <div className={classes.map}>
       <MapContainer key={`${center}`} center={center} zoom={zoom}>
@@ -69,7 +70,7 @@ const MapCircles = ({
     <Fragment>
       {countries.map((c) => (
         <Circle
-          key={c.name}
+          key={c.name + type}
           center={[c.lat ?? 0, c.lon ?? 0]}
           fillOpacity={0.4}
           color={casesTypeColors[type].hex}

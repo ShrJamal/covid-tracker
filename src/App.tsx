@@ -4,13 +4,14 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { LinearProgress, makeStyles } from "@material-ui/core";
 import { CountryCovid } from "./@types/covid";
 
-import { Cards, Chart, CountryPicker, CasesMap } from "./components";
+import { Cards, CountryPicker, CasesMap } from "./components";
 import { Country } from "./@types/country";
+import { CasesType } from "./helpers/map_circles";
 
 const useStyles = makeStyles({
   header: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
 });
 
@@ -18,6 +19,8 @@ export default function App() {
   const [selectedCountry, setSelectedCountry] = useState<Country>();
   const [countriesList, setCountriesList] = useState<string[]>([]);
   const [mapCountries, setMapCountries] = useState<Country[]>([]);
+  const [casesType, setCasesType] = useState(CasesType.cases);
+
   useEffect(() => {
     axios.get<CountryCovid[]>("countries").then((res) => {
       console.log("---Countries", res.data);
@@ -86,13 +89,17 @@ export default function App() {
               }}
             />
           </div>
-          <Cards {...data} />
+          <Cards
+            data={data}
+            casesType={casesType}
+            onTypeChange={(v) => setCasesType(v)}
+          />
           <CasesMap
             mapCountries={mapCountries}
             center={[selectedCountry?.lat ?? 0, selectedCountry?.lon ?? 0]}
             zoom={selectedCountry?.name ? 4 : 3}
+            casesType={casesType}
           />
-          <Chart />
         </Fragment>
       ) : null}
     </div>

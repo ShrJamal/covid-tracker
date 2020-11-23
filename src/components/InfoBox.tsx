@@ -23,11 +23,15 @@ export default function InfoBox({
   title,
   todayCases: todayCount,
   total,
+  isActive,
+  onClick,
 }: {
   gridClass: string;
   title: string;
   todayCases: number;
   total: number;
+  isActive: boolean;
+  onClick: () => void;
 }) {
   const classes = useStyles();
   return (
@@ -36,7 +40,8 @@ export default function InfoBox({
       sm={3}
       xs={12}
       component={Card}
-      className={[classes.item, gridClass].join(" ")}
+      onClick={onClick}
+      className={`${classes.item} ${isActive ? gridClass : ""}`}
     >
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
