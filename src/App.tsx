@@ -1,26 +1,100 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import React, { Fragment, useEffect, useState } from "react";
+import MuiAlert from "@material-ui/lab/Alert";
+import { LinearProgress, makeStyles } from "@material-ui/core";
+import { CountryCovid } from "./@types/covid";
 
-function App() {
+import { Cards, Chart, CountryPicker, CasesMap } from "./components";
+import { Country } from "./@types/country";
+
+const useStyles = makeStyles({
+  header: {
+    display: "flex",
+    justifyContent: "space-around",
+  },
+});
+
+export default function App() {
+  const [selectedCountry, setSelectedCountry] = useState<Country>();
+  const [countriesList, setCountriesList] = useState<string[]>([]);
+  const [mapCountries, setMapCountries] = useState<Country[]>([]);
+  useEffect(() => {
+    axios.get<CountryCovid[]>("countries").then((res) => {
+      console.log("---Countries", res.data);
+      setCountriesList(res.data.map((c) => c.country));
+      setMapCountries(
+        res.data.map<Country>((d) => ({
+          name: d.country,
+          cases: d.cases,
+          recovered: d.recovered,
+          deaths: d.deaths,
+          lat: d.countryInfo.lat,
+          lon: d.countryInfo.long,
+          flag: d.countryInfo.flag,
+        }))
+      );
+    });
+  }, []);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [data, setData] = useState<CountryCovid | undefined>();
+  const classes = useStyles();
+  useEffect(() => {
+    async function fetch() {
+      setLoading(true);
+      try {
+        const res = await axios.get<CountryCovid>(
+          selectedCountry?.name ? `countries/${selectedCountry.name}` : "all"
+        );
+        console.log("-----FETCH ", res);
+        if (res.data) {
+          setError("");
+          setData(res.data);
+        } else {
+          setError(`Ooops! Something went wrong ${res.statusText}`);
+        }
+      } catch (e) {
+        console.error(e);
+        setError(`${e}`);
+      }
+      setLoading(false);
+    }
+    fetch();
+  }, [selectedCountry]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {isLoading ? (
+        <LinearProgress />
+      ) : error || !data ? (
+        <MuiAlert severity="error" elevation={6} variant="filled">
+          {error || "Ooops No Data Found"}
+        </MuiAlert>
+      ) : null}
+      {data ? (
+        <Fragment>
+          <div className={classes.header}>
+            <h1>COVID-19 Tracker</h1>
+            <CountryPicker
+              selected={selectedCountry?.name ?? "global"}
+              countries={countriesList}
+              onChange={(v: string) => {
+                const index = mapCountries.findIndex((c) => c.name === v);
+                setSelectedCountry(() =>
+                  index === -1 ? undefined : mapCountries[index]
+                );
+              }}
+            />
+          </div>
+          <Cards {...data} />
+          <CasesMap
+            mapCountries={mapCountries}
+            center={[selectedCountry?.lat ?? 0, selectedCountry?.lon ?? 0]}
+            zoom={selectedCountry?.name ? 4 : 3}
+          />
+          <Chart />
+        </Fragment>
+      ) : null}
     </div>
   );
 }
-
-export default App;
