@@ -1,49 +1,48 @@
-import { makeStyles } from "@material-ui/core";
-import React, { Fragment } from "react";
-import { Circle, MapContainer, Popup, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "../App.css";
-import { Country } from "../@types/country";
-import { CasesType, casesTypeColors } from "../helpers/map_circles";
-import numeral from "numeral";
+import { makeStyles } from '@material-ui/core'
+import React, { Fragment } from 'react'
+import { Circle, MapContainer, Popup, TileLayer } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import { Country } from '../@types/country'
+import { CasesType, casesTypeColors } from '../helpers/map_circles'
+import numeral from 'numeral'
 
 const useStyles = makeStyles({
   map: {
-    height: "500px",
-    backgroundColor: "white",
-    padding: "1rem",
-    borderRadius: "20px",
-    marginTop: "16px",
-    boxShadow: "0 0 8px -4px rgba(0, 0, 0,0.5)",
+    height: '500px',
+    backgroundColor: 'white',
+    padding: '1rem',
+    borderRadius: '20px',
+    marginTop: '16px',
+    boxShadow: '0 0 8px -4px rgba(0, 0, 0,0.5)',
   },
   flag: {
-    height: "80px",
-    width: "100%",
-    backgroundSize: "contain",
-    borderRadius: "8px",
-    marginBottom: "4px",
+    height: '80px',
+    width: '100%',
+    backgroundSize: 'contain',
+    borderRadius: '8px',
+    marginBottom: '4px',
   },
   name: {
-    fontSize: "18px",
-    fontWeight: "bold",
+    fontSize: '18px',
+    fontWeight: 'bold',
   },
   infos: {
-    fontSize: "16px",
-    marginTop: "4px",
+    fontSize: '16px',
+    marginTop: '4px',
   },
-});
+})
 export default function CasesMap({
   mapCountries,
   center,
   zoom,
   casesType,
 }: {
-  mapCountries: Country[];
-  center: [number, number];
-  zoom: number;
-  casesType: CasesType;
+  mapCountries: Country[]
+  center: [number, number]
+  zoom: number
+  casesType: CasesType
 }) {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.map}>
       <MapContainer key={`${center}`} center={center} zoom={zoom}>
@@ -54,17 +53,17 @@ export default function CasesMap({
         <MapCircles type={casesType} countries={mapCountries} />
       </MapContainer>
     </div>
-  );
+  )
 }
 
 const MapCircles = ({
   type,
   countries,
 }: {
-  type: CasesType;
-  countries: Country[];
+  type: CasesType
+  countries: Country[]
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Fragment>
@@ -84,13 +83,13 @@ const MapCircles = ({
                 style={{ backgroundImage: `url(${c.flag})` }}
               />
               <div className={classes.name}>{c.name}</div>
-              <div>Cases: {numeral(c.cases).format("0,0")}</div>
-              <div>Recovered: {numeral(c.recovered).format("0,0")}</div>
-              <div>Deaths: {numeral(c.deaths).format("0,0")}</div>
+              <div>Cases: {numeral(c.cases).format('0,0')}</div>
+              <div>Recovered: {numeral(c.recovered).format('0,0')}</div>
+              <div>Deaths: {numeral(c.deaths).format('0,0')}</div>
             </div>
           </Popup>
         </Circle>
       ))}
     </Fragment>
-  );
-};
+  )
+}

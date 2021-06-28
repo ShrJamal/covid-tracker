@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react'
 import {
   Grid,
   Card,
   CardContent,
   Typography,
   makeStyles,
-} from "@material-ui/core";
-import CountUp from "react-countup";
-import numeral from "numeral";
+} from '@material-ui/core'
+import CountUp from 'react-countup'
+import numeral from 'numeral'
 
 const useStyles = makeStyles({
   root: {
     marginTop: 12,
   },
   item: {
-    margin: "10px",
+    margin: '10px',
   },
-});
+})
 
 export default function InfoBox({
   gridClass,
@@ -26,14 +26,14 @@ export default function InfoBox({
   isActive,
   onClick,
 }: {
-  gridClass: string;
-  title: string;
-  todayCases: number;
-  total: number;
-  isActive: boolean;
-  onClick: () => void;
+  gridClass: string
+  title: string
+  todayCases: number
+  total: number
+  isActive: boolean
+  onClick: () => void
 }) {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <Grid
       item
@@ -41,7 +41,7 @@ export default function InfoBox({
       xs={12}
       component={Card}
       onClick={onClick}
-      className={`${classes.item} ${isActive ? gridClass : ""}`}
+      className={`${classes.item} ${isActive ? gridClass : ''}`}
     >
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
@@ -61,11 +61,11 @@ export default function InfoBox({
         <Typography
           color="textSecondary"
           gutterBottom
-          style={{ marginTop: "8px" }}
+          style={{ marginTop: '8px' }}
         >
-          <strong>{numeral(total).format("0.00a")} Total</strong>
+          <strong>{numeral(total).format('0.00a')} Total</strong>
         </Typography>
       </CardContent>
     </Grid>
-  );
+  )
 }

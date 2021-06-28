@@ -5,8 +5,8 @@ import {
   createStyles,
   FormControl,
   MenuItem,
-} from "@material-ui/core";
-import React from "react";
+} from '@material-ui/core'
+import React from 'react'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,19 +17,19 @@ const useStyles = makeStyles((theme: Theme) =>
     selectEmpty: {
       marginTop: theme.spacing(2),
     },
-  })
-);
+  }),
+)
 
 const CountryPicker = ({
   selected,
   countries,
   onChange,
 }: {
-  selected: string;
-  countries: string[];
-  onChange: (value: string) => void;
+  selected: string
+  countries: string[]
+  onChange: (value: string) => void
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <FormControl className={classes.formControl}>
       <Select
@@ -37,7 +37,7 @@ const CountryPicker = ({
         variant="outlined"
         onChange={(e) => onChange(e.target.value as string)}
       >
-        <MenuItem key={0} value={"global"}>
+        <MenuItem key={0} value={'global'}>
           Global
         </MenuItem>
         {countries.map((c) => (
@@ -47,7 +47,7 @@ const CountryPicker = ({
         ))}
       </Select>
     </FormControl>
-  );
-};
+  )
+}
 
-export default CountryPicker;
+export default CountryPicker

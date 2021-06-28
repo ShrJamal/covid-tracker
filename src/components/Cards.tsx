@@ -1,8 +1,8 @@
-import React from "react";
-import { Grid, makeStyles } from "@material-ui/core";
-import { CountryCovid } from "../@types/covid";
-import InfoBox from "./InfoBox";
-import { CasesType } from "../helpers/map_circles";
+import React from 'react'
+import { Grid, makeStyles } from '@material-ui/core'
+import { CountryCovid } from '../@types/covid'
+import InfoBox from './InfoBox'
+import { CasesType } from '../helpers/map_circles'
 
 const useStyles = makeStyles({
   root: {
@@ -10,26 +10,26 @@ const useStyles = makeStyles({
     marginBottom: 32,
   },
   cases: {
-    borderBottom: "10px solid rgba(0,0,255,0.5)",
+    borderBottom: '10px solid rgba(0,0,255,0.5)',
   },
   recovered: {
-    borderBottom: "10px solid rgba(0,255,0,0.5)",
+    borderBottom: '10px solid rgba(0,255,0,0.5)',
   },
   deaths: {
-    borderBottom: "10px solid rgba(255,0,0,0.5)",
+    borderBottom: '10px solid rgba(255,0,0,0.5)',
   },
-});
+})
 
 export default function Cards({
   data,
   casesType,
   onTypeChange,
 }: {
-  data: CountryCovid;
-  casesType: CasesType;
-  onTypeChange: (value: CasesType) => void;
+  data: CountryCovid
+  casesType: CasesType
+  onTypeChange: (value: CasesType) => void
 }) {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.root}>
       <Grid container spacing={3} justify="space-between">
@@ -41,7 +41,7 @@ export default function Cards({
           total={data.cases}
           isActive={casesType === CasesType.cases}
           onClick={() => onTypeChange(CasesType.cases)}
-        />{" "}
+        />{' '}
         {/* Recovered */}
         <InfoBox
           gridClass={classes.recovered}
@@ -50,7 +50,7 @@ export default function Cards({
           total={data.recovered}
           isActive={casesType === CasesType.recovered}
           onClick={() => onTypeChange(CasesType.recovered)}
-        />{" "}
+        />{' '}
         {/* Deaths */}
         <InfoBox
           gridClass={classes.deaths}
@@ -62,5 +62,5 @@ export default function Cards({
         />
       </Grid>
     </div>
-  );
+  )
 }

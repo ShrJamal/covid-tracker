@@ -1,0 +1,6 @@
+{
+  "extends": "@antfu",
+  "rules": {
+    "indent": "warn"
+  }
+}
