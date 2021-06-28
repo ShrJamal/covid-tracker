@@ -1,11 +1,11 @@
 export const casesTypeColors = {
   cases: {
     hex: '#CC1034',
-    muliplier: 400,
+    muliplier: 200,
   },
   recovered: {
     hex: '#7dd71d',
-    muliplier: 600,
+    muliplier: 200,
   },
   deaths: {
     hex: '#fb4443',
