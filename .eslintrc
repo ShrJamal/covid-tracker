@@ -1,6 +1,16 @@
 {
-  "extends": "@antfu",
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "rules": {
-    "indent": "warn"
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
