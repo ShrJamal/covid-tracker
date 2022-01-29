@@ -1,11 +1,6 @@
 import React from 'react'
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  makeStyles,
-} from '@material-ui/core'
+import { Grid, Card, CardContent, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CountUp from 'react-countup'
 import numeral from 'numeral'
 

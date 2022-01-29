@@ -1,19 +1,21 @@
+import React from 'react'
 import axios from 'axios'
-import React, { Fragment, useEffect, useState } from 'react'
-import MuiAlert from '@material-ui/lab/Alert'
-import { LinearProgress, makeStyles } from '@material-ui/core'
+import { Fragment, useEffect, useState } from 'react'
+import { Alert, LinearProgress } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+
 import { CountryCovid } from '../@types/covid'
 
 import { Cards, CountryPicker, CasesMap } from '../components'
 import { Country } from '../@types/country'
 import { CasesType } from '../helpers/map_circles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
   },
-})
+}))
 
 export default function App() {
   const [selectedCountry, setSelectedCountry] = useState<Country>()
@@ -23,7 +25,6 @@ export default function App() {
 
   useEffect(() => {
     axios.get<CountryCovid[]>('countries').then((res) => {
-      console.log('---Countries', res.data)
       setCountriesList(res.data.map((c) => c.country))
       setMapCountries(
         res.data.map<Country>((d) => ({
@@ -49,7 +50,6 @@ export default function App() {
         const res = await axios.get<CountryCovid>(
           selectedCountry?.name ? `countries/${selectedCountry.name}` : 'all',
         )
-        console.log('-----FETCH ', res)
         if (res.data) {
           setError('')
           setData(res.data)
@@ -70,9 +70,9 @@ export default function App() {
       {isLoading ? (
         <LinearProgress />
       ) : error || !data ? (
-        <MuiAlert severity="error" elevation={6} variant="filled">
+        <Alert severity="error" elevation={6} variant="filled">
           {error || 'Ooops No Data Found'}
-        </MuiAlert>
+        </Alert>
       ) : null}
       {data ? (
         <Fragment>

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Grid, makeStyles } from '@material-ui/core'
+import { Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { CountryCovid } from '../@types/covid'
 import InfoBox from './InfoBox'
 import { CasesType } from '../helpers/map_circles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
   root: {
     marginHorizontal: 16,
     marginBottom: 32,
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
   deaths: {
     borderBottom: '10px solid rgba(255,0,0,0.5)',
   },
-})
+}))
 
 export default function Cards({
   data,
@@ -32,7 +33,7 @@ export default function Cards({
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <Grid container spacing={3} justify="space-between">
+      <Grid container spacing={3} justifyContent="space-between">
         {/* Confirmed */}
         <InfoBox
           gridClass={classes.cases}

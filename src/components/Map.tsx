@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core'
 import React, { Fragment } from 'react'
+import { makeStyles } from '@mui/styles'
 import { Circle, MapContainer, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Country } from '../@types/country'
